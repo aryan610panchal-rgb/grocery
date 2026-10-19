@@ -1,0 +1,613 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FreshCart - Snacks & Munchies</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #fff;
+    color: #142238;
+}
+
+.page {
+    max-width: 1440px;
+    margin: auto;
+    padding: 20px 5%;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    flex-wrap: wrap;
+    padding: 10px 0;
+}
+
+.logo {
+    font-size: 34px;
+    font-weight: bold;
+    color: #168b27;
+    white-space: nowrap;
+}
+
+.logo span {
+    color: #17243a;
+}
+
+.search {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #d7dfe8;
+    border-radius: 8px;
+    padding: 12px 16px;
+}
+
+.search input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+}
+
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    font-size: 15px;
+}
+
+.icon {
+    position: relative;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.count {
+    position: absolute;
+    top: -9px;
+    right: -9px;
+    background: #168b27;
+    color: white;
+    font-size: 11px;
+    border-radius: 50%;
+    padding: 4px 6px;
+}
+
+/* NAVIGATION */
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    padding: 12px 0;
+    border-bottom: 1px solid #e8edf2;
+}
+
+.category {
+    background: #078b20;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #111;
+    font-size: 14px;
+}
+
+.nav a:hover {
+    color: #078b20;
+}
+
+/* TITLE */
+h1 {
+    font-size: 46px;
+    color: #082d16;
+    margin: 34px 0 14px;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    background: #f5f7f9;
+    padding: 15px 18px;
+    border-radius: 9px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filters {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+select {
+    padding: 9px 13px;
+    border: 1px solid #d8e0e8;
+    border-radius: 7px;
+    background: white;
+    min-width: 145px;
+    color: #17243a;
+}
+
+/* PRODUCT GRID */
+.products {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.card {
+    position: relative;
+    border: 1px solid #dfe6ed;
+    border-radius: 9px;
+    padding: 12px 14px 15px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    transition: 0.25s;
+    background: white;
+}
+
+.card:hover {
+    box-shadow: 0 5px 18px #00000012;
+    transform: translateY(-3px);
+}
+
+.badges {
+    display: flex;
+    gap: 6px;
+    min-height: 25px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    color: white;
+    background: #ff1725;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+.badge.green {
+    background: #078d24;
+}
+
+.product-img {
+    height: 145px;
+    width: 100%;
+    object-fit: contain;
+    margin: 5px 0 10px;
+}
+
+.product-name {
+    font-size: 15px;
+    line-height: 1.35;
+    min-height: 40px;
+    margin-top: auto;
+}
+
+.rating {
+    color: #ffad00;
+    margin: 5px 0;
+    letter-spacing: 1px;
+}
+
+.rating span {
+    color: #8493a7;
+    font-size: 13px;
+    letter-spacing: 0;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    margin-top: 3px;
+}
+
+.price {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.old-price {
+    color: #8794a7;
+    text-decoration: line-through;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.add {
+    border: none;
+    background: #078d24;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 9px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.add:hover {
+    background: #056d1b;
+}
+
+/* PAGINATION */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 0 8px;
+}
+
+.pagination button {
+    background: white;
+    border: 1px solid #dfe6ed;
+    border-radius: 6px;
+    padding: 7px 13px;
+    cursor: pointer;
+}
+
+.pagination .active {
+    background: #078d24;
+    color: white;
+}
+
+/* FOOTER */
+footer {
+    margin-top: 10px;
+    padding: 16px 8px;
+    background: #f6f8fa;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    color: #8592a5;
+    font-size: 12px;
+}
+
+footer strong {
+    color: #078d24;
+}
+
+.social {
+    color: #17243a;
+    font-weight: bold;
+    letter-spacing: 8px;
+}
+
+/* TABLET */
+@media (max-width: 1000px) {
+    .products {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .nav {
+        gap: 15px;
+    }
+
+    h1 {
+        font-size: 38px;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 650px) {
+    .page {
+        padding: 12px;
+    }
+
+    .header {
+        gap: 12px;
+    }
+
+    .logo {
+        font-size: 27px;
+    }
+
+    .header-icons {
+        gap: 12px;
+    }
+
+    .search {
+        order: 3;
+        flex-basis: 100%;
+    }
+
+    .nav {
+        gap: 10px;
+    }
+
+    .category {
+        width: 100%;
+    }
+
+    .nav a {
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 30px;
+        margin-top: 25px;
+    }
+
+    .toolbar {
+        align-items: flex-start;
+    }
+
+    .filters {
+        gap: 10px;
+    }
+
+    select {
+        min-width: 110px;
+    }
+
+    .products {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .card {
+        padding: 9px;
+    }
+
+    .product-img {
+        height: 115px;
+    }
+
+    .product-name {
+        font-size: 13px;
+    }
+
+    .price {
+        font-size: 16px;
+    }
+
+    .old-price {
+        font-size: 11px;
+    }
+
+    .add {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .badge {
+        font-size: 10px;
+        padding: 4px 6px;
+    }
+
+    footer {
+        line-height: 1.8;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">🛒 Fresh<span>Cart</span></div>
+
+        <div class="search">
+            <input type="search" placeholder="Search for products...">
+            <span>⌕</span>
+        </div>
+
+        <div class="header-icons">
+            <span>♙ Login / Register</span>
+            <span class="icon">🛒<small class="count">2</small></span>
+            <span class="icon">♡<small class="count">3</small></span>
+            <span class="icon">☰</span>
+        </div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav class="nav">
+        <div class="category">☰ &nbsp; All Categories</div>
+        <a href="#">Home</a>
+        <a href="#">Snacks</a>
+        <a href="#">Beverages</a>
+        <a href="#">Dairy & Eggs</a>
+        <a href="#">Fruits & Vegetables</a>
+        <a href="#">Personal Care</a>
+        <a href="#">Household</a>
+        <a href="#">Offers</a>
+    </nav>
+
+    <!-- PAGE TITLE -->
+    <h1>Snacks & Munchies</h1>
+
+    <div class="toolbar">
+        <span>18 Products Found</span>
+
+        <div class="filters">
+            <label>Sort by:
+                <select>
+                    <option>Popular</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                </select>
+            </label>
+
+            <label>Show:
+                <select>
+                    <option>12 per page</option>
+                    <option>8 per page</option>
+                    <option>16 per page</option>
+                </select>
+            </label>
+        </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <main class="products">
+
+        <article class="card">
+            <div class="badges">
+                <span class="badge">Top</span>
+                <span class="badge green">Offer</span>
+            </div>
+            <img class="product-img"
+                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQW9hif5WmLCbrECKa0zb0W24lpPAll0L9u8VK5sCL0Yw&s=10"
+                 alt="Sev snack">
+            <h3 class="product-name">Haldiram's Sev Gripe</h3>
+            <div class="rating">★★★★★ <span>(458)</span></div>
+            <div class="price-row">
+                <div class="price">₹71 <span class="old-price">₹85</span></div>
+                <button class="add">+ Add</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="badges"></div>
+            <img class="product-img"
+                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6KD_cjFFkn4ojPqPCCYYGKg8vjpz-pUUxe2JBei0Shg&s"
+                 alt="Butter cookies">
+            <h3 class="product-name">Britannia Good Day Butter Cookies</h3>
+            <div class="rating">★★★★☆ <span>(324)</span></div>
+            <div class="price-row">
+                <div class="price">₹24 <span class="old-price">₹30</span></div>
+                <button class="add">+ Add</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="badges">
+                <span class="badge">Buy 1 Get 1 Free</span>
+                <span class="badge green">Hot</span>
+            </div>
+            <img class="product-img"
+                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUo7LZZwg8tdl7Oj-4KOZ31OCRfRCx_A36-7Sr4friRw&s=10"
+                 alt="Chocolate">
+            <h3 class="product-name">Cadbury 5 Star Chocolate</h3>
+            <div class="rating">★★★★☆ <span>(535)</span></div>
+            <div class="price-row">
+                <div class="price">₹55 <span class="old-price">₹70</span></div>
+                <button class="add">+ Add</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="badges">
+                <span class="badge">Top</span>
+                <span class="badge green">Offer</span>
+            </div>
+            <img class="product-img"
+                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT32UI14ROJcSIG40KALiYO9DE9PiGsdbcXW5IKEAsq_w&s=10"
+                 alt="Potato chips">
+            <h3 class="product-name">Lays American Style Cream & Onion Potato Chips</h3>
+            <div class="rating">★★★★★ <span>(412)</span></div>
+            <div class="price-row">
+                <div class="price">₹52 <span class="old-price">₹65</span></div>
+                <button class="add">+ Add</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="badges">
+                <span class="badge green">New</span>
+            </div>
+            <img class="product-img"
+                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzZ8IURngGN2yxB6LHVisLxB11yG23j_LANfxLg7E4-Q&s=10"
+                 alt="Popcorn">
+            <h3 class="product-name">Act II Instant Popcorn Butter Flavour</h3>
+            <div class="rating">★★★★☆ <span>(287)</span></div>
+            <div class="price-row">
+                <div class="price">₹117 <span class="old-price">₹140</span></div>
+                <button class="add">+ Add</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="badges">
+                <span class="badge">Hot</span>
+                <span class="badge">Save 20%</span>
+            </div>
+            <img class="product-img"
+                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUo7LZZwg8tdl7Oj-4KOZ31OCRfRCx_A36-7Sr4friRw&s=10"
+                 alt="Chocolate bar">
+            <h3 class="product-name">Cadbury 5 Star Chocolate</h3>
+            <div class="rating">★★★★☆ <span>(521)</span></div>
+            <div class="price-row">
+                <div class="price">₹56 <span class="old-price">₹70</span></div>
+                <button class="add">+ Add</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="badges">
+                <span class="badge">Top</span>
+            </div>
+            <img class="product-img"
+                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQW9hif5WmLCbrECKa0zb0W24lpPAll0L9u8VK5sCL0Yw&s=10"
+                 alt="Sev bhujia">
+            <h3 class="product-name">Haldiram's Sev Bhujia</h3>
+            <div class="rating">★★★★★ <span>(362)</span></div>
+            <div class="price-row">
+                <div class="price">₹21 <span class="old-price">₹26</span></div>
+                <button class="add">+ Add</button>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="badges">
+                <span class="badge green">New</span>
+            </div>
+            <img class="product-img"
+                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrmQaX4utzdXW5EkB7Z-AqSPiNa3S2kC6_YyW0Bz3_UA&s=10lk"
+                 alt="Blueberry yogurt">
+            <h3 class="product-name">Dairy Rich & Fresh Blueberry Greek Yogurt</h3>
+            <div class="rating">★★★★☆ <span>(198)</span></div>
+            <div class="price-row">
+                <div class="price">₹144 <span class="old-price">₹180</span></div>
+                <button class="add">+ Add</button>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+        <button>‹</button>
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+        <button>›</button>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div>© 2024 - 2025 FreshCart. All rights reserved. Made with ❤️ in India. Powered by <strong>Codeupgrade</strong></div>
+        <div>Follow us on: <span class="social">f ◎ ♥ ▶</span></div>
+    </footer>
+
+</div>
+</body>
+</html>
